@@ -1,7 +1,7 @@
 /* Listing of exercise solutions for the book 'Functional Programming in
- Scala' - Chapter 1*/
+ Scala' - Chapter 2*/
 
-object ChapterOne {
+object ChapterTwo {
   /** Returns the nth integer of the Fibonacci sequence*/
   def fib(n: Int): Int = {
     @annotation.tailrec
