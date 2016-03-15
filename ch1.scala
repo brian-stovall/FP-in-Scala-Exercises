@@ -14,7 +14,8 @@ object ChapterOne {
   else go(2, 0, 1)
   }
 
-
+  /** Returns true if an array of type A is sorted in ascending order,
+  false otherwise. */
   def isSorted[A] (as: Array[A], gt: (A,A) => Boolean): Boolean = {
     @annotation.tailrec
     def go (iter: Int): Boolean = {
@@ -25,6 +26,24 @@ object ChapterOne {
     go (0)
   }
 
-  def main(args: Array[String]): Unit =
-    println(isSorted(Array(1, 2, 6, 5, 8), (x : Int, y: Int) => x > y))
+
+  /** Returns a partially applied f1 from an f2 */
+  def partial1 [A,B,C] (a: A, f: (A,B) => C) : B => C = {
+    (b: B) => {f (a, b)}
+  }
+
+  def curry[A,B,C] (f: (A, B) => C): A => (B => C) = {
+    (a: A) => { (b: B) => {f(a, b)} }
+  }
+
+  def main(args: Array[String]): Unit = {
+    println (isSorted(Array(1, 2, 6, 5, 8), (x : Int, y: Int) => x > y))
+    def addTwo = partial1 (2, (x: Int, y: Int) => {x + y})
+    println (addTwo(3))
+    println (addTwo(10))
+    def makeAdder = curry((x: Int, y: Int) => {x + y})
+    def addThree = makeAdder(3)
+    println(addThree(4))
+    println(addThree(-6))
+  }
 }
