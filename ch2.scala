@@ -36,6 +36,14 @@ object ChapterOne {
     (a: A) => { (b: B) => {f(a, b)} }
   }
 
+  def uncurry[A,B,C] (f: A => B => C): (A, B) => C = {
+    (a: A, b: B) => {f(a)(b)}
+  }
+
+  def compose[A,B,C] (f: B => C, g: A => B): A => C = {
+    (a: A) => {f(g(a))}
+  }
+
   def main(args: Array[String]): Unit = {
     println (isSorted(Array(1, 2, 6, 5, 8), (x : Int, y: Int) => x > y))
     def addTwo = partial1 (2, (x: Int, y: Int) => {x + y})
@@ -45,5 +53,9 @@ object ChapterOne {
     def addThree = makeAdder(3)
     println(addThree(4))
     println(addThree(-6))
+    def plainAdder = uncurry(makeAdder)
+    println(plainAdder(3, 4))
+    def addSevenDivideTwo = compose( (n: Int) => {n/2}, (n: Int) => {n+7})
+    println(addSevenDivideTwo(3))
   }
 }
