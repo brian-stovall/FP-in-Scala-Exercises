@@ -13,18 +13,52 @@ object MyList {
 
   def tail[A](l: MyList[A]): MyList[A] =
     l match {
-    case Nil => Nil
+    case Nil => sys.error("tail of empty list")
     case Cons(_, t) => t
+    }
+
+  def head[A](l: MyList[A]): A =
+    l match {
+      case Nil => sys.error("head of empty list")
+      case Cons(h, _) => h
+    }
+
+  def setHead[A](l: MyList[A], head: A): MyList[A] =
+    l match {
+      case Nil => Cons(head, Nil)
+      case Cons(h, t) => Cons(head, Cons(h,t))
     }
 
   def drop[A](l: MyList[A], n: Int): MyList[A] = {
     @annotation.tailrec
-    def go[A](l: MyList[A], n: Int): MyList[A] =
+    def go(l: MyList[A], n: Int): MyList[A] =
       if (n == 0) l
       else go(MyList.tail(l), n-1)
 
     go(l, n)
   }
+
+  def dropWhile[A] (l: MyList[A], f: A => Boolean): MyList[A] = {
+    @annotation.tailrec
+    def go(l: MyList[A]): MyList[A] =
+      if (!f(MyList.head(l))) l
+      else go(MyList.tail(l))
+    go(l)
+  }
+
+   def init[A] (l: List[A]): List[A] =
+    l match {
+      case Nil => sys.error("init of empty list")
+      case Cons(_, Nil) => Nil
+      case Cons(h,t) => Cons(h, init(t))
+    }
+
+  def foldRight[A,B](l: List[A], z: B)(f: (A, B) => B): B =
+    l match {
+      case Nil => z
+      case Cons(x,xs) => f(x, foldRight(xs, z)(f))
+    }
+
 
   def product(ds: MyList[Double]): Double = ds match {
     case Nil => 1.0

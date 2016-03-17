@@ -6,5 +6,7 @@ object ChapterThree {
     println(MyList.example)
     println(MyList.tail(MyList.example2))
     println(MyList.drop(testList, 3))
+    println(MyList.dropWhile(testList, (x: Int) => {x < 6}))
+    println(MyList.setHead(testList, 20))
   }
 }
