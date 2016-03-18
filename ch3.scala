@@ -8,5 +8,6 @@ object ChapterThree {
     println(MyList.drop(testList, 3))
     println(MyList.dropWhile(testList, (x: Int) => {x < 6}))
     println(MyList.setHead(testList, 20))
+    println(MyList.length(testList))
   }
 }

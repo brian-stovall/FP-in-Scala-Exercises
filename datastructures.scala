@@ -59,6 +59,9 @@ object MyList {
       case Cons(x,xs) => f(x, foldRight(xs, z)(f))
     }
 
+  def length[A](l: MyList[A]): Int = {
+    foldRight(l, 0)((_, b: Int) => {b + 1})
+  }
 
   def product(ds: MyList[Double]): Double = ds match {
     case Nil => 1.0
